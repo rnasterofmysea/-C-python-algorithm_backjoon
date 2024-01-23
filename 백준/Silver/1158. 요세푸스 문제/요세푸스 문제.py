@@ -1,4 +1,6 @@
-K, N = map(int, input().split())
+import sys
+
+K, N = map(int,sys.stdin.readline().strip().split())
 
 array = list(range(1, K + 1))
 answer = []
