@@ -1,17 +1,10 @@
-import sys
+t = int(input())
 
-test_case = int(sys.stdin.readline().strip())
-for t in range(test_case):
-    k = int(sys.stdin.readline().strip())
-    n = int(sys.stdin.readline().strip())
-
-    a = [i for i in range(1,14+1)]
-
-    for i in range(k):
-        b = []
-        for j in range(1,n+1):
-            b.append(sum(a[:j]))
-        a = b
-
-    result = a.pop()
-    print(result)
+for _ in range(t):  
+    floor = int(input())  # 층
+    num = int(input())  # 호
+    f0 = [x for x in range(1, num+1)]  # 0층 리스트
+    for k in range(floor):  # 층 수 만큼 반복
+        for i in range(1, num):  # 1 ~ n-1까지 (인덱스로 사용)
+            f0[i] += f0[i-1]  # 층별 각 호실의 사람 수를 변경
+    print(f0[-1])  # 가장 마지막 수 출력
