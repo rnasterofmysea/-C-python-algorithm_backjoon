@@ -1,11 +1,9 @@
 import sys
 
-def factorial(value, count):
-    if count == 0:
-        return value
-    else:
-        return factorial(value * count, count - 1)
+def factorial(n):
+    if n == 0:
+        return 1
+    return factorial(n-1) * n
 
-count = int(sys.stdin.readline().strip())
-result = factorial(1, count)
-print(result)
+n = int(sys.stdin.readline().strip())
+print(factorial(n))
