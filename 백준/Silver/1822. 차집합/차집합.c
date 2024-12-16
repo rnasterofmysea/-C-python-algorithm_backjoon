@@ -59,15 +59,14 @@ int main() {
     // 결과 배열 정렬
     if (index > 0) {
         qsort(result_arry, index, sizeof(int), compare);
+        // 결과 출력
+        printf("%d\n", index); // 결과 배열 크기
+        for (int i = 0; i < index; i++) {
+        printf("%d ", result_arry[i]); 
+        }
     }
-
-    // 결과 출력
-    printf("%d\n", index); // 결과 배열 크기
-    for (int i = 0; i < index; i++) {
-        printf("%d ", result_arry[i]);
-    }
-    if (index > 0) {
-        printf("\n");
+    else{
+        printf("0");
     }
 
     // 메모리 해제
