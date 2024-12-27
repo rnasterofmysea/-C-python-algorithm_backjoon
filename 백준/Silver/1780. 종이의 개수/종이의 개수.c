@@ -1,7 +1,15 @@
+/*
+BOJ_1780_종이의 개수
+https://www.acmicpc.net/problem/1780
+*/
+
 #include <stdio.h>
-#include <stdlib.h>
+
+// 최대 크기 정의
+#define MAX_SIZE 2187  // 3^7, 문제에서 N은 최대 3^7 = 2187
 
 // 전역 변수
+int paper[MAX_SIZE][MAX_SIZE];
 int zero_count = 0;
 int one_count = 0;
 int minus_count = 0;
@@ -18,13 +26,14 @@ void counting(int value) {
 }
 
 // 재귀 함수
-void recursion(int **paper, int x, int y, int size) {
-    int current = paper[x][y];
+void recursion(int x_start, int x_end, int y_start, int y_end) {
+    int current = paper[x_start][y_start];
     int same = 1;
+    int size = x_end - x_start;
 
     // 현재 영역이 모두 같은 숫자인지 확인
-    for (int i = x; i < x + size; i++) {
-        for (int j = y; j < y + size; j++) {
+    for (int i = x_start; i < x_end; i++) {
+        for (int j = y_start; j < y_end; j++) {
             if (paper[i][j] != current) {
                 same = 0;
                 break;
@@ -43,7 +52,8 @@ void recursion(int **paper, int x, int y, int size) {
     int new_size = size / 3;
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
-            recursion(paper, x + i * new_size, y + j * new_size, new_size);
+            recursion(x_start + i * new_size, x_start + (i + 1) * new_size,
+                      y_start + j * new_size, y_start + (j + 1) * new_size);
         }
     }
 }
@@ -51,12 +61,6 @@ void recursion(int **paper, int x, int y, int size) {
 int main() {
     int N;
     scanf("%d", &N);
-
-    // 2차원 배열 동적 할당
-    int **paper = (int **)malloc(N * sizeof(int *));
-    for (int i = 0; i < N; i++) {
-        paper[i] = (int *)malloc(N * sizeof(int));
-    }
 
     // 입력 받기
     for (int i = 0; i < N; i++) {
@@ -66,18 +70,12 @@ int main() {
     }
 
     // 재귀 호출
-    recursion(paper, 0, 0, N);
+    recursion(0, N, 0, N);
 
     // 결과 출력
     printf("%d\n", minus_count);
     printf("%d\n", zero_count);
     printf("%d\n", one_count);
-
-    // 동적 메모리 해제
-    for (int i = 0; i < N; i++) {
-        free(paper[i]);
-    }
-    free(paper);
 
     return 0;
 }
