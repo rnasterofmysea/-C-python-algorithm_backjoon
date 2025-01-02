@@ -8,6 +8,25 @@ int M, N;
 int visited[8];
 int arry[8];
 int input_arry[8];
+
+void selectSort(int N){
+    int min = 0;
+    for(int i = 0; i < N -1; i ++){
+        min = i;
+        for(int j = i+1; j < N ; j++){
+            if(input_arry[min] > input_arry[j]){
+                min = j;
+            }
+        }
+        if(i != min){
+            int temp = input_arry[i];
+            input_arry[i] = input_arry[min];
+            input_arry[min] = temp;
+        }
+    }
+    return;
+}
+
 void dfs(int depth) {
     if (depth == M) {
         for (int i = 0; i < M; i++) {
@@ -37,25 +56,7 @@ int main() {
     for(int i = 0; i < N; i ++){
         scanf("%d", &input_arry[i]);
     }
-
-    int min = 0;
-    for(int i = 0; i < N -1; i ++){
-        min = i;
-        for(int j = i+1; j < N ; j++){
-            if(input_arry[min] > input_arry[j]){
-                min = j;
-            }
-        }
-        if(i != min){
-            int temp = input_arry[i];
-            input_arry[i] = input_arry[min];
-            input_arry[min] = temp;
-        }
-    }
-
-    // for(int i = 0; i < N; i ++){
-    //     printf("%d \n", input_arry[i]);
-    // }
+    selectSort(N);
     dfs(0);
     return 0;
 }
