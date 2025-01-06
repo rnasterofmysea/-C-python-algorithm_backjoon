@@ -1,14 +1,9 @@
-/*
-BOj_15650_N과M(2)
-https://www.acmicpc.net/problem/15650
-*/
 #include <stdio.h>
 
 int M, N;
-int visited[8];
 int arry[8];
 
-void dfs(int depth) {
+void dfs(int depth, int start) {
     if (depth == M) {
         for (int i = 0; i < M; i++) {
             printf("%d ", arry[i]);
@@ -17,23 +12,14 @@ void dfs(int depth) {
         return;
     }
 
-    for (int i = 0; i < N; i++) {
-        if (visited[i] == 0) {
-            // 현재 숫자가 이전에 선택된 숫자보다 작으면 제외
-            if (depth > 0 && arry[depth - 1] > i + 1) {
-                continue;
-            }
-
-            arry[depth] = i + 1;
-            visited[i] = 1;
-            dfs(depth + 1);
-            visited[i] = 0; // 백트래킹
-        }
+    for (int i = start; i < N; i++) { // 탐색 시작점을 start로 제한
+        arry[depth] = i + 1; // 숫자 저장
+        dfs(depth + 1, i + 1); // 다음 단계 탐색, 시작 인덱스를 i+1로 설정
     }
 }
 
 int main() {
     scanf("%d %d", &N, &M);
-    dfs(0);
+    dfs(0, 0); // depth = 0, start = 0부터 탐색 시작
     return 0;
 }
