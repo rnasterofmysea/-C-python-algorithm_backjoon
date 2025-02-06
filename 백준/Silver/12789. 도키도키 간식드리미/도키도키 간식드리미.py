@@ -1,31 +1,32 @@
+from collections import deque
+
+# 입력 처리
 N = int(input())
-arry = list(map(int, input().split()))
-start = 0
+line = deque(map(int, input().split()))
+
+# 변수 초기화
 stack = []
+current = 1  # 현재 간식을 받을 순서 번호
 
-for i in range(1, N):
-    target = i
-    found = False
-
-    # 배열에서 target 찾기
-    for j in range(start, N):
-        if target != arry[j]:
-            stack.append(arry[j])
+# 시뮬레이션 시작
+while line or stack:
+    # 줄에서 간식을 받을 수 있는 경우
+    if line and line[0] == current:
+        line.popleft()
+        current += 1
+    # 스택에서 간식을 받을 수 있는 경우
+    elif stack and stack[-1] == current:
+        stack.pop()
+        current += 1
+    # 줄에서 간식을 받을 수도, 스택에서 받을 수도 없는 경우
+    else:
+        if line:
+            stack.append(line.popleft())
         else:
-            start = j + 1
-            found = True
             break
 
-    # 스택에서 target 찾기
-    if not found:
-        while stack:
-            if target == stack.pop():
-                found = True
-                break
-
-    # target이 어디에도 없을 경우
-    if not found:
-        print("Sad")
-        exit()
-
-print("Nice")
+# 결과 출력
+if current > N:
+    print("Nice")
+else:
+    print("Sad")
