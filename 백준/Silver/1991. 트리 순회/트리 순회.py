@@ -1,39 +1,37 @@
-# 입력을 받습니다.
-n = int(input())
+import sys
+
+input = sys.stdin.readline
+N = int(input())
+
 tree = {}
 
-for _ in range(n):
-    node, left, right = input().split()
-    tree[node] = (left, right)
+for _ in range(N):
+    data, left, right = input().strip().split()
+    tree[data] = (left, right)
 
-# 전위 순회 (Preorder)
-def preorder(node):
-    if node == '.':
+def preorder(current):
+    if current == ".":
         return
-    print(node, end='')
-    preorder(tree[node][0])
-    preorder(tree[node][1])
+    print(current, end='')
+    preorder(tree[current][0])
+    preorder(tree[current][1])
 
-# 중위 순회 (Inorder)
-def inorder(node):
-    if node == '.':
+def inorder(current):
+    if current == ".":
         return
-    inorder(tree[node][0])
-    print(node, end='')
-    inorder(tree[node][1])
-
-# 후위 순회 (Postorder)
-def postorder(node):
-    if node == '.':
+    inorder(tree[current][0])
+    print(current, end='')
+    inorder(tree[current][1])
+    
+def postorder(current):
+    if current == ".":
         return
-    postorder(tree[node][0])
-    postorder(tree[node][1])
-    print(node, end='')
-
-# 순회 결과 출력
-preorder('A')
+    postorder(tree[current][0])
+    postorder(tree[current][1])
+    print(current, end='')
+    
+preorder("A")
 print()
-inorder('A')
+inorder("A")
 print()
-postorder('A')
-print()
+postorder("A")
